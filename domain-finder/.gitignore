@@ -74,9 +74,11 @@ coverage.xml
 .venv
 env/
 venv/
+newEnv/
 ENV/
 env.bak/
 venv.bak/
+newEnv.bak/
 
 # mkdocs documentation
 /site
