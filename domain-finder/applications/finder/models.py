@@ -8,7 +8,10 @@ class Provider(TimeStampBaseModel):
     ip_address = models.GenericIPAddressField()
     detail = models.TextField(null=True)
 
+    def __str__(self):
+        return self.detail
+
 
 class Domain(TimeStampBaseModel):
     domain = models.CharField(max_length=100)
-    provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
+    provider = models.ForeignKey(Provider, related_name='provider', on_delete=models.CASCADE)
