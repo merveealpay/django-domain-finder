@@ -15,16 +15,12 @@ services:
 
   web:
     build: .
-    #command: python manage.py runserver --settings=config.settings.docker 0.0.0.0:8000
+    command: /start_django
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      - DATABASE_NAME=domainfinder
-      - DATABASE_PORT=5432
-      - DATABASE_HOST=db
-      - DATABASE_USER=domainadmin
-      - DATABASE_PASSWORD=1234
+    env_file:
+      - docker/env/.web

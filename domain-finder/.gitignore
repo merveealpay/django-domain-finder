@@ -100,6 +100,7 @@ GitHub.sublime-settings
 __pycache__/
 .idea/
 not.txt
+docker/env/
 
 
 

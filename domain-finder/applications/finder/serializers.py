@@ -11,7 +11,8 @@ class ProviderSerializer(serializers.ModelSerializer):
 
 
 class DomainSerializer(serializers.ModelSerializer):
-    provider = serializers.StringRelatedField()
+    provider = ProviderSerializer(read_only=True)
+    # TODO bu providerin sadece country'si alınacak.
 
     class Meta:
         model = Domain

@@ -14,6 +14,16 @@ class DomainView(APIView):
         serializer = DomainSerializer(domains, many=True)
         return Response(serializer.data)
 
+    def post(self):
+        # TODO domaini alıncak. domaini dbye kaydetceksin.
+        #  response olarak 201 mı doncez, yanında data doncek mıyız?
+
+        pass
+
+    def delete(self):
+        # TODO domaini db'den silecegiz, resp ne doncez bak.
+        pass
+
 
 class ProviderView(APIView):
 
@@ -21,4 +31,3 @@ class ProviderView(APIView):
         providers = Provider.objects.all()
         serializer = ProviderSerializer(providers, many=True)
         return Response(serializer.data)
-
