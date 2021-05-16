@@ -15,6 +15,7 @@ services:
 
   web:
     build: .
+    #command: python manage.py runserver --settings=config.settings.docker 0.0.0.0:8000
     volumes:
       - .:/app
     ports:

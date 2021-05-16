@@ -9,7 +9,7 @@ class Provider(TimeStampBaseModel):
     detail = models.TextField(null=True)
 
     def __str__(self):
-        return self.detail
+        return self.ip_address
 
 
 class Domain(TimeStampBaseModel):

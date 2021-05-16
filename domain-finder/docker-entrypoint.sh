@@ -7,4 +7,4 @@ echo "Created migration files are running."
 python manage.py migrate finder --settings=config.settings.docker
 
 echo "Starting Django project"
-python manage.py runserver --settings=config.settings.docker
+python manage.py runserver --settings=config.settings.docker 0.0.0.0:8000
