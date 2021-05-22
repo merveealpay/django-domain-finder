@@ -7,13 +7,14 @@ class ProviderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Provider
-        fields = ['id', 'country', 'ip_address']
+        fields = '__all__'
 
 
 class DomainSerializer(serializers.ModelSerializer):
     provider = ProviderSerializer(read_only=True)
-    # TODO bu providerin sadece country'si alınacak.
+    #provider_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    #provider = serializers.CharField(source="provider.ip_address", read_only=True)
 
     class Meta:
         model = Domain
-        fields = ['id', 'domain', 'provider']
+        fields = '__all__'

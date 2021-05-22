@@ -1,25 +1,26 @@
+
 from config.settings.base import *
 import environ
 
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, False)
+    DEBUG=(bool, True)
 )
-# reading .env file
-environ.Env.read_env()
 
-# False if not in os.environ
-DEBUG = env('DEBUG')
+if env.get_value('DOCKER', default=False):
+    environ.Env.read_env('docker/env/.env')
+else:
+    environ.Env.read_env('docker/env/.defaultenv')
 
-# Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
-SECRET_KEY = env('SECRET_KEY')
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
 
-# Parse database connection url strings like psql://user:pass@127.0.0.1:8458/db
-
-# TODO database conf
 DATABASES = {
-    # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
-    'default': env.db(),
-    # read os.environ['SQLITE_URL']
-    'extra': env.db('SQLITE_URL', default='sqlite:////tmp/my-tmp-sqlite.db')
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env("DATABASE_NAME"),
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_HOST"),
+        'PORT': env("DATABASE_PORT", default=5432, cast=int),
+    }
 }

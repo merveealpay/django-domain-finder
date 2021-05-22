@@ -14,11 +14,12 @@ class DomainView(APIView):
         serializer = DomainSerializer(domains, many=True)
         return Response(serializer.data)
 
-    def post(self):
-        # TODO domaini alıncak. domaini dbye kaydetceksin.
-        #  response olarak 201 mı doncez, yanında data doncek mıyız?
-
-        pass
+    def post(self, request):
+        serializer = DomainSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self):
         # TODO domaini db'den silecegiz, resp ne doncez bak.
@@ -31,3 +32,10 @@ class ProviderView(APIView):
         providers = Provider.objects.all()
         serializer = ProviderSerializer(providers, many=True)
         return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ProviderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

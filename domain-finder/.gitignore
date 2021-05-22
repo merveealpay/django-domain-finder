@@ -72,6 +72,7 @@ coverage.xml
 # Environments
 .env
 .venv
+.defaultenv
 env/
 venv/
 newEnv/
@@ -101,6 +102,7 @@ __pycache__/
 .idea/
 not.txt
 docker/env/
+
 
 
 

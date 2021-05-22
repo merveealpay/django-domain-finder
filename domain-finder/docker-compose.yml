@@ -6,8 +6,8 @@ services:
     image: postgres
     ports:
       - 5432
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
+    #volumes:
+    #  - ./data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=domainfinder
       - POSTGRES_USER=domainadmin
@@ -15,12 +15,16 @@ services:
 
   web:
     build: .
-    command: /start_django
+    environment:
+      - DOCKER=True
+    env_file:
+      - docker/env/.env
+    command: sh /docker-entrypoint.sh
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
-    env_file:
-      - docker/env/.web
+
+
