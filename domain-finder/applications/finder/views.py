@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -36,7 +37,21 @@ class ProviderView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
+
+class ProviderDetailView(APIView):
+
+    def get_object(self, pk):
+        try:
+            return Provider.objects.get(pk=pk)
+        except Provider.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        provider = self.get_object(pk)
+        serializer = ProviderSerializer(provider)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        provider = self.get_object(pk)
+        provider.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
