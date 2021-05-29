@@ -7,14 +7,13 @@ class ProviderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Provider
-        fields = '__all__'
+        exclude = ['update_at', 'created_at']
 
 
 class DomainSerializer(serializers.ModelSerializer):
-    provider = ProviderSerializer(read_only=True)
-    #provider_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    #provider = ProviderSerializer()
     #provider = serializers.CharField(source="provider.ip_address", read_only=True)
 
     class Meta:
         model = Domain
-        fields = '__all__'
+        fields = ['id', 'domain', 'provider']
