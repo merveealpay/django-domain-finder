@@ -12,7 +12,7 @@ class DomainView(APIView):
 
     def get(self, request, *args, **kwargs):
         domains = Domain.objects.all()
-        serializer = DomainSerializer(domains, many=True)
+        serializer = DomainSerializer(domains.prefetch_related('provider'), many=True)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
@@ -54,4 +54,23 @@ class ProviderDetailView(APIView):
     def delete(self, request, pk):
         provider = self.get_object(pk)
         provider.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class DomainDetailView(APIView):
+
+    def get_object(self, pk):
+        try:
+            return Domain.objects.get(pk=pk)
+        except Domain.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        domain = self.get_object(pk)
+        serializer = DomainSerializer(domain)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        domain = self.get_object(pk)
+        domain.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
