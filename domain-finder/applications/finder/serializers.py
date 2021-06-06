@@ -18,7 +18,6 @@ class DomainSerializer(serializers.ModelSerializer):
         model = Domain
         fields = ['id', 'domain', 'provider', 'provider_id']
 
-
 # class TestSerializer(serializers.Serializer):
 #     name = serializers.CharField(required=True)
 #     last_name = serializers.CharField(required=False)
