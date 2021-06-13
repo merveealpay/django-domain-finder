@@ -14,4 +14,4 @@ class Provider(TimeStampBaseModel):
 
 class Domain(TimeStampBaseModel):
     domain = models.CharField(max_length=100)
-    provider = models.ForeignKey(Provider, related_name='provider', on_delete=models.CASCADE)
+    provider = models.ForeignKey(Provider, related_name='provider', on_delete=models.CASCADE, null=True)
