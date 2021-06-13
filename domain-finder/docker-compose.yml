@@ -17,6 +17,8 @@ services:
     build: .
     environment:
       - DOCKER=True
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
     env_file:
       - docker/env/.env
     command: sh /docker-entrypoint.sh
@@ -26,5 +28,25 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
+
+  celery:
+    restart: always
+    build: .
+    command: celery -A finder worker -l info
+    environment:
+      - POSTGRES_DB=domainfinder
+      - POSTGRES_USER=domainadmin
+      - POSTGRES_PASSWORD=1234
+    depends_on:
+      - redis
+      - web
+      - db
+
+  redis:
+    image: "redis:alpine"
+
+
+
 
 
