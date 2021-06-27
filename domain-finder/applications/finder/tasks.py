@@ -1,10 +1,15 @@
-from __future__ import absolute_import, unicode_literals
-
 from celery import shared_task
+import celery
+import time
+from django.core import management
 
 
-@shared_task
-def add(x, y):
-    return x + y
+@celery.task
+def take_domains():
+    try:
+        print("in celery module")
+        management.call_command("domain_crawler", verbosity=0)
+        return "success"
 
-
+    except:
+        print("error")

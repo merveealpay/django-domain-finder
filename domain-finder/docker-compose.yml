@@ -17,8 +17,8 @@ services:
     build: .
     environment:
       - DOCKER=True
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+      - CELERY_BROKER=redis://redis:6360/0
+      - CELERY_BACKEND=redis://redis:6360/0
     env_file:
       - docker/env/.env
     command: sh /docker-entrypoint.sh
@@ -33,7 +33,7 @@ services:
   celery:
     restart: always
     build: .
-    command: celery -A finder worker -l info
+    command: celery -A applications.finder worker -l info
     environment:
       - POSTGRES_DB=domainfinder
       - POSTGRES_USER=domainadmin

@@ -1,3 +1,5 @@
+from celery.schedules import crontab
+
 from config.settings.base import *
 import environ
 
@@ -48,3 +50,6 @@ LOGGING = {
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+
+

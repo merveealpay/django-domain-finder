@@ -38,6 +38,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'drf_api_logger',
     'debug_toolbar',
+    'django_celery_beat',
 ]
 
 CORE_APPS = [
@@ -147,5 +148,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DRF_API_LOGGER_DATABASE = True
 
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+# CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6360/0")
+# CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6360/0")
+
+# CELERY STUFF
+BROKER_URL = 'redis://redis:6360'
+CELERY_RESULT_BACKEND = 'redis://redis:6360'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# CELERY_IMPORTS = [
+#     'applications.finder.tasks'  # Gorevler bu modulde.
+# ]
