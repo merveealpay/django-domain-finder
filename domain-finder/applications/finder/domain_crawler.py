@@ -7,21 +7,25 @@ from bs4 import BeautifulSoup
 from applications.finder.models import Domain
 
 
-class Command(BaseCommand):
-    all_domain = []
+class DomainList:
+
+    # TODO: isimlendirmeyi duzelt.
 
     def extract_domain(self):
+        all_domain = []
         resp = requests.post(url="https://domainbigdata.com/nj/2yTlQHiod9ZJe-gXgtJ_9A")
+        # TODO: istek hatalı olursa nasıl hareket edicez bunu kontrol et
+        # y burda beatufilsoup object gibi de
         y = BeautifulSoup(resp.content, "lxml")
+        # t yerine findtable fln de
         t = y.find("table", attrs={"class": "t1"})
         z = t.find("tbody")
+        # bu forlardan bi yerinde patlarsa bu domain objeleri nereye gitcek, loglaman lazım
+        # try exceptleri iyi kullan
         for k in z.findAll("tr"):
             for p in k.findAll("td")[0]:
-                self.all_domain.append(p.text)
+                all_domain.append(Domain.objects.create(domain=p.text, created_at="2021-07-12"))
+                Domain.objects.bulk_create(all_domain)
 
     def handle(self, *args, **kwargs):
         self.extract_domain()
-        for domain in self.all_domain:
-            domain = Domain.objects.create(
-                domain=domain, created_at="2021-06-10")
-            domain.save()

@@ -152,13 +152,19 @@ DRF_API_LOGGER_DATABASE = True
 # CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6360/0")
 
 # CELERY STUFF
-BROKER_URL = 'redis://redis:6360'
-CELERY_RESULT_BACKEND = 'redis://redis:6360'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6360'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6360'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
-# CELERY_IMPORTS = [
-#     'applications.finder.tasks'  # Gorevler bu modulde.
-# ]
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
